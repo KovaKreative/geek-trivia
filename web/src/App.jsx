@@ -6,6 +6,7 @@ import './App.css';
 import { useSelector } from 'react-redux';
 
 import Home from './components/Home';
+import Quiz from './components/Quiz';
 
 import { goHome, goTo } from './features/views/viewSlice';
 
@@ -13,11 +14,10 @@ function App() {
 
   const page = useSelector(state => state.view.page);
 
-  let viewRender = <></>;
-
   return (
     <main>
       {page === "HOME" && <Home />}
+      {page === "QUIZ" && <Quiz />}
     </main>
   );
 }

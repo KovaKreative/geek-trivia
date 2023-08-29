@@ -5,7 +5,7 @@ dotenv.config();
 // other dependencies
 import fs from 'fs';
 import chalk from 'chalk';
-import db from '../db/connection';
+import db from '../db/connection.js';
 
 // Loads the schema files from db/schema
 const runSchemaFiles = async () => {
@@ -19,9 +19,10 @@ const runSchemaFiles = async () => {
   }
 };
 
+// Loads the singular schema.sql file from db
 const runSchemaFile = async () => {
   console.log(chalk.magenta(`-> Loading Schema File...`));
-  const schemaFile = ds.readFileSync('./db/schema.sql', 'utf8');
+  const schemaFile = fs.readFileSync('./db/schema.sql', 'utf8');
   console.log(`\t-> Running ${chalk.green('schema')}`);
   await db.query(schemaFile);
 }

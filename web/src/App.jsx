@@ -4,6 +4,9 @@ import viteLogo from '/vite.svg';
 import './App.css';
 
 import { useSelector, useDispatch } from 'react-redux';
+
+import Home from './components/Home';
+
 import { goHome, goTo } from './features/views/viewSlice';
 
 function App() {

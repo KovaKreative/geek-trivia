@@ -13,12 +13,16 @@ const app = express();
 app.use(morgan('dev'));
 app.use(cookieSession({ name: 'session', keys: [process.env.KEY], maxAge: 365 * 24 * 60 * 60 * 1000 }));
 app.use(cors({
-  origin: 'http://localhost:8080',
+  origin: 'http://localhost:5173',
   methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
   credentials: true
 }));
 // app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+import quizRoutes from './routes/quiz.js';
+
+app.use('/quiz', quizRoutes);
 
 app.get('/', (req, res) => {
   res.json({ success: true });

@@ -1,7 +1,3 @@
-// load .env data into process.env
-import dotenv from 'dotenv';
-dotenv.config();
-
 // other dependencies
 import fs from 'fs';
 import chalk from 'chalk';
@@ -25,7 +21,7 @@ const runSchemaFile = async () => {
   const schemaFile = fs.readFileSync('./db/schema.sql', 'utf8');
   console.log(`\t-> Running ${chalk.green('schema')}`);
   await db.query(schemaFile);
-}
+};
 
 const runSeedFiles = async () => {
   console.log(chalk.cyan(`-> Loading Seeds ...`));

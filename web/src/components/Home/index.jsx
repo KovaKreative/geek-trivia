@@ -1,4 +1,8 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from 'react-redux';
+import { setCategory } from "../../features/quiz/quizSlice";
+import { goTo } from "../../features/views/viewSlice";
+
 import Button from "../Button";
 
 import axios from "axios";
@@ -7,8 +11,11 @@ export default function Home() {
 
   const [categories, setCategories] = useState([]);
 
+  const dispatch = useDispatch();
+
   const goToQuiz = function(id) {
-    console.log("Go to quiz " + id);
+    dispatch(setCategory(id));
+    dispatch(goTo("QUIZ"));
   };
 
   useEffect(() => {
@@ -32,9 +39,9 @@ export default function Home() {
   });
 
   return (
-    <main>
+    <section className="Home">
       <h1 className="text-6xl text-yellow-300 font-bold mb-5">KovaKreative Geek Trivia Quiz</h1>
       {quizButtons}
-    </main>
+    </section>
   );
 }

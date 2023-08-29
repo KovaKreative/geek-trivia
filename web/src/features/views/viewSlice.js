@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const p = {
   HOME: "HOME",
+  QUIZ: "QUIZ",
+  RESULT: "RESULT",
   NOTFOUND: "NOTFOUND"
 };
 

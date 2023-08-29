@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Home from './components/Home';
 
@@ -11,19 +11,14 @@ import { goHome, goTo } from './features/views/viewSlice';
 
 function App() {
 
-  const view = useSelector(state => state.view.page);
-  const dispatch = useDispatch();
+  const page = useSelector(state => state.view.page);
 
   let viewRender = <></>;
 
-  switch (view) {
-    case "HOME":
-      viewRender = <Home />
-      break;
-  }
-
   return (
-    viewRender
+    <main>
+      {page === "HOME" && <Home />}
+    </main>
   );
 }
 

@@ -1,3 +1,4 @@
+-- Video Games
 INSERT INTO questions (id, question, correct_answer, wrong_answers)
 VALUES (
   1,

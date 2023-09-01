@@ -1,13 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const viewSlice = createSlice({
-  name: 'view',
+export const quizSlice = createSlice({
+  name: 'quiz',
   initialState: {
+    categories: [],
     category: null,
     currentRound: 0,
     questions: []
   },
   reducers: {
+    setCategories: (state, action) => {
+      state.categories = action.payload;
+    },
     setCategory: (state, action) => {
       state.category = action.payload;
     },
@@ -17,5 +21,5 @@ export const viewSlice = createSlice({
   }
 });
 
-export const { setCategory, nextRound } = viewSlice.actions;
-export default viewSlice.reducer;
+export const { setCategories, setCategory, nextRound } = quizSlice.actions;
+export default quizSlice.reducer;

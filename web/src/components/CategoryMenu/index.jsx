@@ -1,29 +1,55 @@
+import { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { setCategory } from "../../features/quiz/quizSlice";
+import { chooseCategories, setCategories } from "../../features/quiz/quizSlice";
 import { goTo } from "../../features/views/viewSlice";
 
+import axios from 'axios';
+
 import Button from "../Button";
+import Loader from "../Loader";
 
 export default function CategoryMenu() {
 
-  const categoriesState = useSelector(state => state.quiz.categories);
+  const categories = useSelector(state => state.quiz.categories);
 
   const dispatch = useDispatch();
 
-  const goToQuiz = function(id) {
-    dispatch(setCategory(id));
+  const goToQuiz = function(cat) {
+    dispatch(chooseCategories(cat));
     dispatch(goTo("QUIZ"));
   };
 
+  useEffect(() => {
+    // Get categories from server
+    if (!categories.length) {
+      axios.get('/quiz/')
+        .then(res => {
+          dispatch(setCategories(res.data));
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }, []);
 
-
-  const quizButtons = categoriesState.map((cat, i) => {
-    return <Button text={cat.category} key={i} onClick={() => goToQuiz(cat.id)}></Button>;
+  const quizOptions = categories.map((cat, i) => {
+    return (
+      <div key={i} className="text-yellow-200 text-xl">
+        <input name={cat.category} type="checkbox" />
+        <label for={cat.category}>{cat.category}</label>
+      </div>
+    );
   });
 
   return (
     <section className="CategoryMenu">
-      {quizButtons}
+      {!categories.length ? <Loader />
+        :
+        <form>
+          {quizOptions}
+          <Button text="Start Quiz" onClick={() => goToQuiz(chosenCategories)} />
+        </form>
+      }
     </section>
   );
 }

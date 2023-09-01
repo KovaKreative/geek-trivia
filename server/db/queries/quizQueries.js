@@ -10,8 +10,12 @@ const getQuizCategories = () => {
   `)
     .then(results => {
       const filteredResults = results.rows.filter(category => category.num_of_questions > 10);
-      return filteredResults;
+      return results.rows;
     });
+};
+
+const getQuizQuestions = (id) => {
+  // return db.query()
 };
 
 export { getQuizCategories };

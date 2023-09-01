@@ -20,7 +20,7 @@ app.use(cors({
 // app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-import quizRoutes from './routes/quiz.js';
+import quizRoutes from './routes/quizRoutes.js';
 
 app.use('/quiz', quizRoutes);
 

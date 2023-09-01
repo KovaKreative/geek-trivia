@@ -3,8 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const quizSlice = createSlice({
   name: 'quiz',
   initialState: {
-    categories: [],
-    categoriesChosen: [],
+    categories: {},
     currentRound: 0,
     questions: []
   },
@@ -12,8 +11,8 @@ export const quizSlice = createSlice({
     setCategories: (state, action) => {
       state.categories = action.payload;
     },
-    chooseCategories: (state, action) => {
-      state.category = action.payload;
+    chooseCategory: (state, action) => {
+      state.categories[action.payload.id].selected = action.payload.selected;
     },
     nextRound: (state) => {
       state.currentRound++;
@@ -21,5 +20,5 @@ export const quizSlice = createSlice({
   }
 });
 
-export const { setCategories, chooseCategories, nextRound } = quizSlice.actions;
+export const { setCategories, chooseCategory, nextRound } = quizSlice.actions;
 export default quizSlice.reducer;

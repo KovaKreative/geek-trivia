@@ -17,3 +17,5 @@ INSERT INTO questions_categories (question_id, category_id) VALUES (16, 1);
 INSERT INTO questions_categories (question_id, category_id) VALUES (17, 1);
 INSERT INTO questions_categories (question_id, category_id) VALUES (18, 1);
 INSERT INTO questions_categories (question_id, category_id) VALUES (19, 1);
+
+INSERT INTO questions_categories (question_id, category_id) VALUES (20, 4);

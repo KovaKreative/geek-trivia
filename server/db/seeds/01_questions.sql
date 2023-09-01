@@ -150,3 +150,12 @@ VALUES (
   'Emotion Engine',
   ARRAY ['Cell Processor', 'Blast Processor', 'Kinetica Engine']
 );
+
+--Horror
+INSERT INTO questions (id, question, correct_answer, wrong_answers)
+VALUES (
+  20,
+  'In which city does the majority of A Nightmare of Elm Street franchise take place?',
+  'Springwood',
+  ARRAY ['Silent Hill', 'Haddonfield', 'Woodsboro']
+);

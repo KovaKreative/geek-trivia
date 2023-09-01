@@ -34,8 +34,12 @@ export default function CategoryMenu() {
 
   const quizOptions = categories.map((cat, i) => {
     return (
-      <div key={i} className="text-yellow-200 text-xl">
-        <input name={cat.category} type="checkbox" />
+      <div key={i} className="text-yellow-200 text-2xl">
+        <input
+          name={cat.category}
+          type="checkbox"
+          className="rounded py-3 p-3 m-3 cursor-pointer focus:ring-4  focus:ring-yellow-500 bg-yellow-100 accent-yellow-800 checked:focus:bg-yellow-700 checked:hover:bg-yellow-700 checked:bg-yellow-600"
+        />
         <label for={cat.category}>{cat.category}</label>
       </div>
     );

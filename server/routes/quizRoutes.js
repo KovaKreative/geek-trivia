@@ -8,8 +8,19 @@ router.get('/', (req, res) => {
   console.log(req.params);
   getQuizCategories()
     .then(result => {
-      console.log(result);
-      res.json(result);
+      const formattedResults = {};
+      result.forEach(r => {
+        if(formattedResults.hasOwnProperty(r.id)) {
+          console.log("Yes");
+          return formattedResults[r.id].questions.push(r.question);
+        }
+        formattedResults[r.id] = {
+          id: r.id,
+          category: r.category,
+          questions: [r.question]
+        }
+      });
+      res.json(formattedResults);
     });
 });
 

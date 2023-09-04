@@ -155,7 +155,29 @@ VALUES (
 INSERT INTO questions (id, question, correct_answer, wrong_answers)
 VALUES (
   20,
-  'In which city does the majority of A Nightmare of Elm Street franchise take place?',
+  'In which fictional town does the majority of A Nightmare of Elm Street franchise take place?',
   'Springwood',
   ARRAY ['Silent Hill', 'Haddonfield', 'Woodsboro']
+);
+INSERT INTO questions (id, question, correct_answer, wrong_answers)
+VALUES (
+  21,
+  'In which fictional town does the video game Alan Wake take place?',
+  'Bright Falls',
+  ARRAY ['Silent Hill', 'Raccoon City', 'Twin Peaks']
+);
+
+INSERT INTO questions (id, question, correct_answer, wrong_answers)
+VALUES (
+  22,
+  'Along with Gene Simmons, which of the following Rock musicians played a cameo in the horror film Trick or Treat (1986)?',
+  'Ozzy Osbourne',
+  ARRAY ['Steven Tyler', 'Dee Snider', 'Alice Cooper']
+);
+INSERT INTO questions (id, question, correct_answer, wrong_answers)
+VALUES (
+  23,
+  'Which of the following artists has not been featured on an Alice Cooper album?',
+  'Kid Rock',
+  ARRAY ['Xzibit', 'Ke$ha', 'Rob Zombie']
 );

@@ -31,10 +31,10 @@ export default function CategoryMenu() {
       axios.get('/quiz/')
         .then(res => {
           console.log(res.data);
-          const categories = {...res.data};
+          const categories = { ...res.data };
           for (const cat in categories) {
             categories[cat].selected = false;
-          }          
+          }
           dispatch(setCategories(categories));
         })
         .catch(err => {
@@ -51,8 +51,15 @@ export default function CategoryMenu() {
       }
       return accumulator;
     }, 0);
-    console.log(sum);
-    setQuestions(sum);
+    let questions = [];
+    for (const id in categories) {
+      if (!categories[id].selected) {
+        continue;
+      }
+      const newQuestions = categories[id].questions.filter(q => !questions.includes(q));
+      questions.push(...newQuestions);
+    }
+    setQuestions(questions.length);
   }, [categories]);
 
   const quizOptions = Object.values(categories).map((cat, i) => {
@@ -65,7 +72,7 @@ export default function CategoryMenu() {
           value={cat.num_of_questions}
           onChange={(e) => selectCategory(cat.id, e.target.checked)}
         />
-        <label htmlFor={cat.category}>{cat.category}<br/>{`(${cat.questions.length} Question${cat.questions.length == 1 ? '' : 's'})`}</label>
+        <label htmlFor={cat.category}>{cat.category}<br />{`(${cat.questions.length} Question${cat.questions.length == 1 ? '' : 's'})`}</label>
       </div>
     );
   });
@@ -82,7 +89,12 @@ export default function CategoryMenu() {
             <div className="flex flex-wrap justify-around mb-4">
               {quizOptions}
             </div>
-            <Button text={questions >= 10 ? `Start Quiz (${questions} questions)` : 'Select your categories'} onClick={() => goToQuiz(chosenCategories)} />
+            <Button
+              title={questions < 10 ? "Choose categories that toal to 10 distinct questions" : "Click to start your quiz"}
+              disabled={questions < 10}
+              text={questions >= 10 ? `Start Quiz (${questions} questions)` : `(${questions} questions)`}
+              onClick={() => goToQuiz(chosenCategories)}
+            />
           </form>
       }
     </section>

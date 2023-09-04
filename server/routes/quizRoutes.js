@@ -11,7 +11,6 @@ router.get('/', (req, res) => {
       const formattedResults = {};
       result.forEach(r => {
         if(formattedResults.hasOwnProperty(r.id)) {
-          console.log("Yes");
           return formattedResults[r.id].questions.push(r.question);
         }
         formattedResults[r.id] = {

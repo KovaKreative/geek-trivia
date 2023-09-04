@@ -28,4 +28,4 @@ INSERT INTO questions_categories (question_id, category_id) VALUES (22, 2);
 INSERT INTO questions_categories (question_id, category_id) VALUES (22, 3);
 INSERT INTO questions_categories (question_id, category_id) VALUES (22, 4);
 
-INSERT INTO questions_categories (question_id, category_id) VALUES (22, 3);
+INSERT INTO questions_categories (question_id, category_id) VALUES (23, 3);

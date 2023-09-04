@@ -30,12 +30,11 @@ export default function CategoryMenu() {
     if (!categories.length) {
       axios.get('/quiz/')
         .then(res => {
-          const categories = {};
-          res.data.forEach(e => {
-            categories[e.id] = {
-              id: e.id, category: e.category, num_of_questions: Number(e.num_of_questions), selected: false
-            };
-          });
+          console.log(res.data);
+          const categories = {...res.data};
+          for (const cat in categories) {
+            categories[cat].selected = false;
+          }          
           dispatch(setCategories(categories));
         })
         .catch(err => {
@@ -48,7 +47,7 @@ export default function CategoryMenu() {
     const sum = Object.values(categories).reduce((accumulator, cat) => {
       console.log(accumulator, cat);
       if (cat.selected) {
-        return accumulator + cat.num_of_questions;
+        return accumulator + cat.questions.length;
       }
       return accumulator;
     }, 0);
@@ -58,15 +57,15 @@ export default function CategoryMenu() {
 
   const quizOptions = Object.values(categories).map((cat, i) => {
     return (
-      <div key={i} className="text-yellow-200 text-2xl">
+      <div key={i} className="text-yellow-200 text-2xl w-1/4 text-left flex">
         <input
           name={cat.category}
           type="checkbox"
-          className="rounded py-3 p-3 m-3 cursor-pointer focus:ring-4 focus:ring-yellow-500 bg-yellow-100 accent-yellow-800 checked:focus:bg-yellow-700 checked:hover:bg-yellow-700 checked:bg-yellow-600"
+          className="rounded py-3 p-3 m-3 place-self-center cursor-pointer focus:ring-4 focus:ring-yellow-500 bg-yellow-100 accent-yellow-800 checked:focus:bg-yellow-700 checked:hover:bg-yellow-700 checked:bg-yellow-600"
           value={cat.num_of_questions}
           onChange={(e) => selectCategory(cat.id, e.target.checked)}
         />
-        <label htmlFor={cat.category}>{cat.category}{` (${cat.num_of_questions} Question${cat.num_of_questions == 1 ? '' : 's'})`}</label>
+        <label htmlFor={cat.category}>{cat.category}<br/>{`(${cat.questions.length} Question${cat.questions.length == 1 ? '' : 's'})`}</label>
       </div>
     );
   });
@@ -80,7 +79,7 @@ export default function CategoryMenu() {
           <Loader />
           :
           <form>
-            <div className="flex justify-around mb-4">
+            <div className="flex flex-wrap justify-around mb-4">
               {quizOptions}
             </div>
             <Button text={questions >= 10 ? `Start Quiz (${questions} questions)` : 'Select your categories'} onClick={() => goToQuiz(chosenCategories)} />

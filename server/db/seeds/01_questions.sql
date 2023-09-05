@@ -166,7 +166,51 @@ VALUES (
   'Bright Falls',
   ARRAY ['Silent Hill', 'Raccoon City', 'Twin Peaks']
 );
+INSERT INTO questions (id, question, correct_answer, wrong_answers)
+VALUES (
+  24,
+  'Which of the following classic monsters is not a boss in the original Castlevania video game?',
+  'Werewolf',
+  ARRAY ['The Mummy', 'Frankenstein''s Monster', 'Medusa']
+);
+INSERT INTO questions (id, question, correct_answer, wrong_answers)
+VALUES (
+  25,
+  'The classic Horror short story The Cask of Amontillado was written by which author?',
+  'Edgar Allan Poe',
+  ARRAY ['H.P. Lovecraft', 'Henry James', 'Arthur Conan Doyle']
+);
+INSERT INTO questions (id, question, correct_answer, wrong_answers)
+VALUES (
+  26,
+  'Which iconic Universal Monster actor portrayed their character in a stage production, prior to being cast in their respective movie?',
+  'Bela Lugosi as Dracula',
+  ARRAY ['Boris Karloff as Frankenstein''s Monster', 'Lon Chaney Jr. as The Wolf Man', 'Lon Chaney as The Phantom of the Opera']
+);
+INSERT INTO questions (id, question, correct_answer, wrong_answers)
+VALUES (
+  27,
+  'Which Heavy Metal band is named after a Horror film from 1932 starring Bela Lugosi?',
+  'White Zombie',
+  ARRAY ['Black Sabbath', 'Nosferatu', 'They Might Be Giants']
+);
+INSERT INTO questions (id, question, correct_answer, wrong_answers)
+VALUES (
+  28,
+  'Which iconic Horror director got his start by directing segments for Mr. Rogers'' Neighbourhood?',
+  'George A. Romero',
+  ARRAY ['Wes Craven', 'John Carpenter', 'Stanley Kubrick']
+);
+INSERT INTO questions (id, question, correct_answer, wrong_answers)
+VALUES (
+  29,
+  'Which Horror film actor reprised his role by voicing his iconic character in the Video Game adaptation of the franchise?',
+  'Bruce Campbell - Evil Dead',
+  ARRAY ['Robert Englund - A Nightmare on Elm Street', 'Kane Hodder - Friday The 13th', 'Sigourney Weaver - Alien']
+);
 
+
+--Rock & Metal
 INSERT INTO questions (id, question, correct_answer, wrong_answers)
 VALUES (
   22,

@@ -7,19 +7,11 @@ import Loader from "../Loader";
 
 export default function Quiz() {
 
-  // const chosenCategories = useSelector(state => state.quiz.categories);
+  const chosenCategories = useSelector(state => state.quiz.categories);
 
-  // useEffect(() => {
-  //   if (chosenCategories) {
-  //     axios.post(`/quiz/`)
-  //       .then(res => {
-  //         console.log(res.data);
-  //       })
-  //       .catch(err => {
-  //         console.log(err);
-  //       });
-  //   }
-  // }, [chosenCategories]);
+  useEffect(() => {
+
+  }, [chosenCategories]);
 
   return (
     <>

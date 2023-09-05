@@ -29,3 +29,22 @@ INSERT INTO questions_categories (question_id, category_id) VALUES (22, 3);
 INSERT INTO questions_categories (question_id, category_id) VALUES (22, 4);
 
 INSERT INTO questions_categories (question_id, category_id) VALUES (23, 3);
+
+INSERT INTO questions_categories (question_id, category_id) VALUES (24, 1);
+INSERT INTO questions_categories (question_id, category_id) VALUES (24, 4);
+
+INSERT INTO questions_categories (question_id, category_id) VALUES (25, 4);
+
+INSERT INTO questions_categories (question_id, category_id) VALUES (26, 2);
+INSERT INTO questions_categories (question_id, category_id) VALUES (26, 4);
+
+INSERT INTO questions_categories (question_id, category_id) VALUES (27, 2);
+INSERT INTO questions_categories (question_id, category_id) VALUES (27, 3);
+INSERT INTO questions_categories (question_id, category_id) VALUES (27, 4);
+
+INSERT INTO questions_categories (question_id, category_id) VALUES (28, 2);
+INSERT INTO questions_categories (question_id, category_id) VALUES (28, 4);
+
+INSERT INTO questions_categories (question_id, category_id) VALUES (29, 1);
+INSERT INTO questions_categories (question_id, category_id) VALUES (29, 2);
+INSERT INTO questions_categories (question_id, category_id) VALUES (29, 4);

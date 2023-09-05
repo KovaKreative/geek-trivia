@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { getQuizCategories } from '../db/queries/quizQueries.js';
+import { getQuizCategories, getQuizQuestions } from '../db/queries/quizQueries.js';
 
 const router = express.Router();
 
@@ -10,14 +10,14 @@ router.get('/', (req, res) => {
     .then(result => {
       const formattedResults = {};
       result.forEach(r => {
-        if(formattedResults.hasOwnProperty(r.id)) {
+        if (formattedResults.hasOwnProperty(r.id)) {
           return formattedResults[r.id].questions.push(r.question);
         }
         formattedResults[r.id] = {
           id: r.id,
           category: r.category,
           questions: [r.question]
-        }
+        };
       });
       res.json(formattedResults);
     });
@@ -25,6 +25,10 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   console.log(req.body);
+  getQuizQuestions(req.body.categories)
+    .then(results => {
+      console.log(results);
+    });
   res.json({ success: true });
 });
 

@@ -21,7 +21,19 @@ export default function CategoryMenu() {
   };
 
   const goToQuiz = function() {
-    dispatch(goTo("QUIZ"));
+    // Filter selected categories and store their IDs for the backend request
+    const IDs = Object.values(categories).filter(cat => cat.selected).map(cat => cat.id);
+    
+    axios.post(`/quiz/`, {
+      categories: [...IDs]
+    })
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    // dispatch(goTo("QUIZ"));
   };
 
   useEffect(() => {

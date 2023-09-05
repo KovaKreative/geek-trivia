@@ -14,11 +14,14 @@ export const quizSlice = createSlice({
     chooseCategory: (state, action) => {
       state.categories[action.payload.id].selected = action.payload.selected;
     },
-    nextRound: (state) => {
+    setQuiz: (state, action) => {
+      state.questions = [...action.payload];
+    },
+    nextQuestion: (state) => {
       state.currentRound++;
     }
   }
 });
 
-export const { setCategories, chooseCategory, nextRound } = quizSlice.actions;
+export const { setCategories, chooseCategory, setQuiz, nextQuestion } = quizSlice.actions;
 export default quizSlice.reducer;

@@ -19,17 +19,23 @@ router.get('/', (req, res) => {
           questions: [r.question]
         };
       });
-      res.json(formattedResults);
+      res.json({ success: true, results: formattedResults });
+    })
+    .catch(err => {
+      res.json({ success: false, err });
     });
 });
 
 router.post('/', (req, res) => {
   console.log(req.body);
-  getQuizQuestions(req.body.categories)
+  getQuizQuestions(req.body.categories, req.body.limit)
     .then(results => {
       console.log(results);
+      res.json({ success: true, results });
+    })
+    .catch(err => {
+      res.json({ success: false, err });
     });
-  res.json({ success: true });
 });
 
 export default router;

@@ -13,16 +13,17 @@ const getQuizCategories = () => {
     });
 };
 
-const getQuizQuestions = (IDs) => {
+const getQuizQuestions = (IDs, limit) => {
   const insert = IDs.map((id, index) => {
     return `questions_categories.category_id = $${index + 1}`
   }).join(' OR ');
   const query = `SELECT questions.id, questions.question, questions.correct_answer, questions.wrong_answers FROM questions
   JOIN questions_categories ON questions.id = questions_categories.question_id
   WHERE ${insert}
-  GROUP by questions.id`
-  console.log(query);
-  return db.query(query, [...IDs])
+  GROUP by questions.id
+  ORDER BY random()
+  LIMIT $${IDs.length + 1}`
+  return db.query(query, [...IDs, limit])
     .then(results => {
       return results.rows;
     });

@@ -9,7 +9,7 @@ export default function Button(props) {
         }
       }
       disabled={props.disabled}
-      title={props.title}
+      text={props.text}
     >
       {props.text || 'Button'}
     </button>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { chooseCategory, setCategories } from "../../features/quiz/quizSlice";
+import { chooseCategory, setCategories, setQuiz } from "../../features/quiz/quizSlice";
 import { goTo } from "../../features/views/viewSlice";
 
 import axios from 'axios';
@@ -23,17 +23,22 @@ export default function CategoryMenu() {
   const goToQuiz = function() {
     // Filter selected categories and store their IDs for the backend request
     const IDs = Object.values(categories).filter(cat => cat.selected).map(cat => cat.id);
-    
+
     axios.post(`/quiz/`, {
-      categories: [...IDs]
+      categories: [...IDs], limit: 10
     })
       .then(res => {
-        console.log(res.data);
+        if (!res.data.success) {
+          return console.log(res.data.err);
+        }
+        const results = res.data.results;
+        console.log(results);
+        dispatch(setQuiz(results));
+        dispatch(goTo("QUIZ"));
       })
       .catch(err => {
         console.log(err);
       });
-    // dispatch(goTo("QUIZ"));
   };
 
   useEffect(() => {
@@ -41,14 +46,17 @@ export default function CategoryMenu() {
     if (!categories.length) {
       axios.get('/quiz/')
         .then(res => {
-          const results = { ...res.data };
+          if (!res.data.success) {
+            return console.log(res.data.err);
+          }
+          const results = { ...res.data.results };
           for (const cat in results) {
             results[cat].selected = categories[cat]?.selected || false;
           }
           dispatch(setCategories(results));
         })
         .catch(err => {
-          console.log(err);
+          console.log(err.message);
         });
     }
   }, []);

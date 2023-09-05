@@ -15,7 +15,7 @@ function App() {
   const page = useSelector(state => state.view.page);
 
   return (
-    <main>
+    <main className="h-full">
       {page === "HOME" && <Home />}
       {page === "QUIZ" && <Quiz />}
     </main>

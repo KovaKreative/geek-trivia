@@ -23,9 +23,8 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/:id', (req, res) => {
-  console.log("Param exists");
-  console.log(req.params.id.split(','));
+router.post('/', (req, res) => {
+  console.log(req.body);
   res.json({ success: true });
 });
 

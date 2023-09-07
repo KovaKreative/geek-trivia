@@ -14,6 +14,8 @@ export default function CategoryMenu() {
 
   const [questions, setQuestions] = useState(0);
 
+  const [loading, setLoading] = useState(true); 
+
   const dispatch = useDispatch();
 
   const selectCategory = function(cat, val) {
@@ -39,6 +41,8 @@ export default function CategoryMenu() {
       .catch(err => {
         console.log(err);
       });
+    setLoading(true);
+
   };
 
   useEffect(() => {
@@ -54,6 +58,7 @@ export default function CategoryMenu() {
             results[cat].selected = categories[cat]?.selected || false;
           }
           dispatch(setCategories(results));
+          setLoading(false);
         })
         .catch(err => {
           console.log(err.message);
@@ -95,25 +100,23 @@ export default function CategoryMenu() {
   });
 
   return (
-    <section className="CategoryMenu text-yellow-300 text-xl">
-      <p>Choose your categories. The question pool must total 10 or more.</p>
-      {
-        !Object.values(categories).length
-          ?
-          <Loader />
-          :
-          <form>
-            <div className="flex flex-wrap justify-around mb-4">
-              {quizOptions}
-            </div>
-            <Button
-              title={questions < 10 ? "Choose categories that toal to 10 distinct questions" : "Click to start your quiz"}
-              disabled={questions < 10}
-              text={questions >= 10 ? `Start Quiz (${questions} questions)` : `(${questions} questions)`}
-              onClick={goToQuiz}
-            />
-          </form>
-      }
-    </section>
+      loading
+      ?
+      <Loader />
+      :
+      <section className="CategoryMenu text-yellow-300 text-xl">
+        <form>
+          <p>Choose your categories. The question pool must total 10 or more.</p>
+          <div className="flex flex-wrap justify-around mb-4">
+            {quizOptions}
+          </div>
+          <Button
+            title={questions < 10 ? "Choose categories that toal to 10 distinct questions" : "Click to start your quiz"}
+            disabled={questions < 10}
+            text={questions >= 10 ? `Start Quiz (${questions} questions)` : `(${questions} questions)`}
+            onClick={goToQuiz}
+          />
+        </form>
+      </section>
   );
 }

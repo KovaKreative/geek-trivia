@@ -15,19 +15,6 @@ export default function Quiz() {
   const totalQuestions = useSelector(state => state.quiz.questions).length;
   const buttonData = useSelector(state => state.quiz.buttonData);
 
-  const proceedButton = () => {
-    const text = "Next";
-    const dispatchFuction = nextQuestion;
-    if (round >= totalQuestions) {
-      text = "See Results";
-      dispatchFuction = goToResults;
-    }
-    return <Button
-      text={text}
-      onClick={() => dispatch(dispatchFuction())}
-    />;
-  };
-
   const initializeQuestion = function(q) {
     const responses = [q.correct_answer];
     const ordered = [];
@@ -39,7 +26,6 @@ export default function Quiz() {
       const index = Math.floor(Math.random() * responses.length);
       ordered.push(responses.splice(index, 1)[0]);
     }
-    console.log(ordered);
     const data = {};
     ordered.forEach((d, i) => {
       data[i] = {
@@ -53,6 +39,7 @@ export default function Quiz() {
 
   useEffect(() => {
     console.log("Question:", question);
+    console.log("Round:", round, totalQuestions);
     initializeQuestion(question);
   }, [round]);
 
@@ -67,7 +54,10 @@ export default function Quiz() {
       <div className="mb-4 flex gap-2 flex-wrap justify-center content-center h-1/4">
         {buttons}
       </div>
-      {question.result && proceedButton()}
+      {question.result && <Button
+        text={round + 1 < totalQuestions ? "Next" : "See Results"}
+        onClick={round + 1 < totalQuestions ? () => dispatch(nextQuestion()) : () => dispatch(goToResults())}
+      />}
     </>
   );
 }

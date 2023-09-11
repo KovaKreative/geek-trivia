@@ -16,6 +16,8 @@ export default function CategoryMenu() {
 
   const [loading, setLoading] = useState(true); 
 
+  const [questionLimit, setMaxQuestions] = useState(3);
+
   const dispatch = useDispatch();
 
   const selectCategory = function(cat, val) {
@@ -27,7 +29,7 @@ export default function CategoryMenu() {
     const IDs = Object.values(categories).filter(cat => cat.selected).map(cat => cat.id);
 
     axios.post(`/quiz/`, {
-      categories: [...IDs], limit: 10
+      categories: [...IDs], limit: questionLimit
     })
       .then(res => {
         if (!res.data.success) {
@@ -106,14 +108,13 @@ export default function CategoryMenu() {
       :
       <section className="CategoryMenu text-yellow-300 text-xl">
         <form>
-          <p>Choose your categories. The question pool must total 10 or more.</p>
+          <p>Choose your categories. The question pool must total {questionLimit} or more.</p>
           <div className="flex flex-wrap justify-around mb-4">
             {quizOptions}
           </div>
           <Button
-            title={questions < 10 ? "Choose categories that toal to 10 distinct questions" : "Click to start your quiz"}
-            disabled={questions < 10}
-            text={questions >= 10 ? `Start Quiz (${questions} questions)` : `(${questions} questions)`}
+            disabled={questions < questionLimit}
+            text={questions >= questionLimit ? `Start Quiz (${questions} questions)` : `(${questions} questions)`}
             onClick={goToQuiz}
           />
         </form>

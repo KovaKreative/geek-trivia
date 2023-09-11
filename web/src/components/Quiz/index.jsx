@@ -1,15 +1,21 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { setButtons } from "../../features/quiz/quizSlice";
 
 import QuizButton from "../QuizButton";
 
 export default function Quiz() {
 
+  const dispatch = useDispatch();
+
   const round = useSelector(state => state.quiz.currentRound);
   const question = useSelector(state => state.quiz.questions[round]);
+  const buttonData = useSelector(state => state.quiz.buttonData);
   const [answer, setAnswer] = useState(null);
 
-  let buttons = [];
+  const chooseAnswer = function(answer) {
+    setAnswer(answer);
+  };
 
   const initializeQuestion = function(question) {
     const responses = [question.correct_answer];
@@ -18,18 +24,36 @@ export default function Quiz() {
       responses.push(a);
     });
 
-    while(responses.length) {
+    while (responses.length) {
       const index = Math.floor(Math.random() * responses.length);
       ordered.push(responses.splice(index, 1)[0]);
     }
-
     console.log(ordered);
-    buttons = ordered.map((a, i) => {
-      return <QuizButton key={i} text={a} />
-    })
+    const data = {};
+    ordered.forEach((d, i) => {
+      data[i] = {
+        id: i,
+        text: d,
+        state: "active"
+      }
+    });
+
+    dispatch(setButtons(data));
   };
 
-  initializeQuestion(question);
+  useEffect(() => {
+    console.log("Question:", question);
+    initializeQuestion(question);
+  }, [question]);
+
+  useEffect(() => {
+    console.log(answer);
+  }, [answer]);
+
+
+  const buttons = Object.values(buttonData).map(a => {
+    return <QuizButton key={a.id} id={a.id} text={a.text} onClick={() => chooseAnswer(a.text)} state={a.state} />;
+  });
 
   return (
     <>

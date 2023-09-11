@@ -108,10 +108,14 @@ export default function CategoryMenu() {
       :
       <section className="CategoryMenu text-yellow-300 text-xl">
         <form>
-          <p>Choose your categories. The question pool must total {questionLimit} or more.</p>
+          <p className="text-3xl">Choose your categories. The question pool must total {questionLimit} or more.</p>
+          <p className="text-sm">Note: Some questions may overlap several categories and the total number of questions in the end may be lower than the sum of each individual category.</p>
           <div className="flex flex-wrap justify-around mb-4">
             {quizOptions}
           </div>
+          <label htmlFor="total">Total questions: </label>
+          <input className="rounded bg-purple-950 py-0 h-11 mb-4" type="number" name="total" value={questionLimit} min="3" max="20" onChange={e => setMaxQuestions(e.target.value)}></input>
+          <br/>
           <Button
             disabled={questions < questionLimit}
             text={questions >= questionLimit ? `Start Quiz (${questions} questions)` : `(${questions} questions)`}

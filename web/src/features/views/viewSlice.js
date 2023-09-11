@@ -18,11 +18,14 @@ export const viewSlice = createSlice({
     goHome: (state) => {
       state.page = p.HOME;
     },
+    goToResults: (state, action) => {
+      state.page = p.RESULT;
+    },
     goTo: (state, action) => {
       state.page = p.hasOwnProperty(action.payload) ? p[action.payload] : p.NOTFOUND;
     }
   }
 });
 
-export const { goHome, goTo } = viewSlice.actions;
+export const { goHome, goToResults, goTo } = viewSlice.actions;
 export default viewSlice.reducer;

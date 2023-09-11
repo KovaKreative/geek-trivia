@@ -16,19 +16,19 @@ export const quizSlice = createSlice({
       state.categories[action.payload.id].selected = action.payload.selected;
     },
     setQuiz: (state, action) => {
-      state.questions = [...action.payload];
+      state.questions = action.payload.map(q => { return{...q, result: null} });
     },
     setButtons: (state, action) => {
       state.buttonData = {...action.payload};
     },
     selectAnswer: (state, action) => {
       for(const id in state.buttonData) {
-        console.log(state.buttonData[id], action.payload);
         if(state.buttonData[id].id === action.payload) {
+          state.questions[state.currentRound].result = state.buttonData[id].text;
           state.buttonData[id].state = "chosen";
           continue;
         }
-        state.buttonData[id].state = "inactive";
+        state.buttonData[id].state = "active";
       }
     },
     nextQuestion: (state) => {

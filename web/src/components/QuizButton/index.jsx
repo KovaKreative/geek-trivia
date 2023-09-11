@@ -13,7 +13,7 @@ export default function QuizButton(props) {
     {
       "bg-yellow-200 hover:bg-yellow-100 text-purple-700 active:bg-yellow-400 hover:text-purple-500 active:text-purple-700 focus:outline-none focus:ring-4 focus:ring-yellow-500": buttonData.state === "active",
       "bg-gray-400 text-gray-600 cursor-not-allowed": buttonData.state === "inactive",
-      "bg-orange-300 text-purple-700 cursor-not-allowed": buttonData.state === "chosen",
+      "bg-blue-300 text-blue-700 cursor-not-allowed": buttonData.state === "chosen",
       "bg-red-600 text-red-200 cursor-not-allowed": buttonData.state === "incorrect",
       "bg-green-600 text-green-200 cursor-not-allowed": buttonData.state === "correct",
     }
@@ -25,7 +25,6 @@ export default function QuizButton(props) {
       onClick={() => {
         if(buttonData.state === "active") {
           dispatch(selectAnswer(buttonData.id));
-          props.onClick();
         }
       }}
       disabled={props.disabled}

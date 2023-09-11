@@ -7,8 +7,7 @@ import { useSelector } from 'react-redux';
 
 import Home from './components/Home';
 import Quiz from './components/Quiz';
-
-import { goHome, goTo } from './features/views/viewSlice';
+import Results from './components/Results';
 
 function App() {
 
@@ -18,6 +17,7 @@ function App() {
     <main className="h-full">
       {page === "HOME" && <Home />}
       {page === "QUIZ" && <Quiz />}
+      {page === "RESULT" && <Results />}
     </main>
   );
 }

@@ -14,7 +14,7 @@ function App() {
   const page = useSelector(state => state.view.page);
 
   return (
-    <main className="h-full">
+    <main className="h-full flex flex-col items-center">
       {page === "HOME" && <Home />}
       {page === "QUIZ" && <Quiz />}
       {page === "RESULT" && <Results />}

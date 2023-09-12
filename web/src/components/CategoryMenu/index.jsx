@@ -87,7 +87,7 @@ export default function CategoryMenu() {
 
   const quizOptions = Object.values(categories).map((cat, i) => {
     return (
-      <div key={i} className="text-yellow-200 text-2xl text-left flex">
+      <div key={i} className="text-yellow-200 md:text-2xl text-left flex">
         <input
           name={cat.category}
           type="checkbox"
@@ -105,7 +105,7 @@ export default function CategoryMenu() {
       ?
       <Loader />
       :
-      <section className="CategoryMenu text-yellow-300 text-xl">
+      <section className="CategoryMenu text-yellow-300 text-xl container">
         <form>
           <p className="text-3xl">Choose your categories. The question pool must total {questionLimit} or more.</p>
           <p className="text-sm mb-4">Note: Some questions may overlap several categories and the total number of questions in the end may be lower than the sum of each individual category.</p>

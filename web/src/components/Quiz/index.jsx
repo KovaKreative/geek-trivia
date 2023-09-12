@@ -38,8 +38,6 @@ export default function Quiz() {
   };
 
   useEffect(() => {
-    console.log("Question:", question);
-    console.log("Round:", round, totalQuestions);
     initializeQuestion(question);
   }, [round]);
 

@@ -14,7 +14,7 @@ export default function CategoryMenu() {
 
   const [questions, setQuestions] = useState(0);
 
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   const [questionLimit, setMaxQuestions] = useState(3);
 
@@ -36,7 +36,6 @@ export default function CategoryMenu() {
           return console.log(res.data.err);
         }
         const results = res.data.results;
-        console.log(results);
         dispatch(setQuiz(results));
         dispatch(goTo("QUIZ"));
       })
@@ -102,20 +101,24 @@ export default function CategoryMenu() {
   });
 
   return (
-      loading
+    loading
       ?
       <Loader />
       :
       <section className="CategoryMenu text-yellow-300 text-xl">
         <form>
           <p className="text-3xl">Choose your categories. The question pool must total {questionLimit} or more.</p>
-          <p className="text-sm">Note: Some questions may overlap several categories and the total number of questions in the end may be lower than the sum of each individual category.</p>
+          <p className="text-sm mb-4">Note: Some questions may overlap several categories and the total number of questions in the end may be lower than the sum of each individual category.</p>
           <div className="flex flex-wrap justify-around mb-4">
             {quizOptions}
           </div>
-          <label htmlFor="total">Total questions: </label>
-          <input className="rounded bg-purple-950 py-0 h-11 mb-4" type="number" name="total" value={questionLimit} min="3" max="20" onChange={e => setMaxQuestions(e.target.value)}></input>
-          <br/>
+          <div className="h-11 flex justify-center">
+            <label className="mr-3 h-fit self-center" htmlFor="total">Total questions: </label>
+            <button className="h-full w-12 bg-yellow-300 hover:bg-yellow-200 active:bg-yellow-400 text-xl rounded-l transition" onClick={e => {e.preventDefault(); setMaxQuestions(prev => Math.max(3, prev - 1))}}>➖</button>
+            <input className="no-spinner bg-purple-950 py-0 h-full w-12 text-center text-xl" type="number" name="total" value={questionLimit} min="3" max="20" onChange={e => setMaxQuestions(e.target.value)}></input>
+            <button className="h-full w-12 bg-yellow-300 hover:bg-yellow-200 active:bg-yellow-400 text-xl rounded-r transition" onClick={e => {e.preventDefault(); setMaxQuestions(prev => Math.min(20, prev + 1))}}>➕</button>
+          </div>
+          <br />
           <Button
             disabled={questions < questionLimit}
             text={questions >= questionLimit ? `Start Quiz (${questions} questions)` : `(${questions} questions)`}

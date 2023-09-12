@@ -16,6 +16,16 @@
   -webkit-text-size-adjust: 100%;
 }
 
+.no-spinner {
+  -moz-appearance: textfield;
+}
+
+.no-spinner::-webkit-outer-spin-button,
+.no-spinner::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

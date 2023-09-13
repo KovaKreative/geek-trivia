@@ -27,8 +27,7 @@ export default function CategoryMenu() {
   const goToQuiz = function() {
     // Filter selected categories and store their IDs for the backend request
     const IDs = Object.values(categories).filter(cat => cat.selected).map(cat => cat.id);
-    console.log(IDs);
-    axios.get(`/quiz/${IDs.join(",")}`)
+    axios.get(`/quiz/`, { params: { categories: IDs, limit: questionLimit} })
       .then(res => {
         if (!res.data.success) {
           return console.log(res.data.err);
@@ -47,7 +46,7 @@ export default function CategoryMenu() {
   useEffect(() => {
     // Get categories from server
     if (!categories.length) {
-      axios.get('/quiz/categories')
+      axios.get('/categories/')
         .then(res => {
           if (!res.data.success) {
             return console.log(res.data.err);

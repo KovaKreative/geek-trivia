@@ -4,7 +4,7 @@ import { getQuizCategories, getQuizQuestions } from '../db/queries/quizQueries.j
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get('/categories/', (req, res) => {
   console.log(req.params);
   getQuizCategories()
     .then(results => {
@@ -16,9 +16,9 @@ router.get('/', (req, res) => {
     });
 });
 
-router.post('/', (req, res) => {
-  console.log(req.body);
-  getQuizQuestions(req.body.categories, req.body.limit)
+router.get('/quiz/*', (req, res) => {
+  console.log(req.query);
+  getQuizQuestions(req.query.categories, req.query.limit)
     .then(results => {
       console.log(results);
       res.json({ success: true, results });

@@ -8,6 +8,7 @@ router.get('/', (req, res) => {
   console.log(req.params);
   getQuizCategories()
     .then(results => {
+      console.log(results);
       res.json({ success: true, results });
     })
     .catch(err => {

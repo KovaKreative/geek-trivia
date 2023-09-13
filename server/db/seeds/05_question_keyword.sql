@@ -1,7 +1,4 @@
-INSERT INTO questions_keywords (question_id, keyword_id) VALUES (1, 1);
-INSERT INTO questions_keywords (question_id, keyword_id) VALUES (1, 3);
-INSERT INTO questions_keywords (question_id, keyword_id) VALUES (1, 7);
-INSERT INTO questions_keywords (question_id, keyword_id) VALUES (1, 28);
+INSERT INTO questions_keywords (question_id, keyword_id) VALUES (1, 1), (1, 3), (1, 7), (1, 28);
 
 INSERT INTO questions_keywords (question_id, keyword_id) VALUES (2, 1);
 INSERT INTO questions_keywords (question_id, keyword_id) VALUES (2, 4);

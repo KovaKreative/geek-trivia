@@ -54,6 +54,8 @@ export default function CategoryMenu() {
           if (!res.data.success) {
             return console.log(res.data.err);
           }
+          console.log(res.data.results);
+
           const results = { ...res.data.results };
           for (const cat in results) {
             results[cat].selected = categories[cat]?.selected || false;
@@ -95,7 +97,7 @@ export default function CategoryMenu() {
           value={cat.selected}
           onChange={(e) => selectCategory(cat, e.target.checked)}
         />
-        <label htmlFor={cat.category}>{cat.category}<br />{`(${cat.questions.length} Question${cat.questions.length == 1 ? '' : 's'})`}</label>
+        <label htmlFor={cat.category}>{cat.category}<br />{`(${cat.questions} Question${cat.questions == 1 ? '' : 's'})`}</label>
       </div>
     );
   });

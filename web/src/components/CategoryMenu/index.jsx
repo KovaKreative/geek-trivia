@@ -20,6 +20,8 @@ export default function CategoryMenu() {
 
   const dispatch = useDispatch();
 
+  const quiz = useSelector(state => state.quiz);
+
   const selectCategory = function(cat, val) {
     dispatch(chooseCategory({ ...cat, selected: val }));
   };
@@ -30,14 +32,14 @@ export default function CategoryMenu() {
     axios.get(`/quiz/`, { params: { categories: IDs, limit: questionLimit} })
       .then(res => {
         if (!res.data.success) {
-          return console.log(res.data.err);
+          return console.log("Serverside Error:", res.data.err);
         }
         const results = res.data.results;
         dispatch(setQuiz(results));
         dispatch(goTo("QUIZ"));
       })
       .catch(err => {
-        console.log(err);
+        console.log("Error:", err.message);
       });
     setLoading(true);
 
@@ -49,19 +51,19 @@ export default function CategoryMenu() {
       axios.get('/categories/')
         .then(res => {
           if (!res.data.success) {
-            return console.log(res.data.err);
+            return console.log("Serverside Error:", res.data.err);
           }
           const results = {};
 
           res.data.results.forEach(r => {
             const id = r.id;
-            results[id] = { ...r, questions: r.questions.split(","), selected: categories[id]?.selected || false };
+            results[id] = { ...r, questions: r.questions.split("::"), selected: categories[id]?.selected || false };
           });
           dispatch(setCategories(results));
           setLoading(false);
         })
         .catch(err => {
-          console.log(err.message);
+          console.log("Error:", err.message);
         });
     }
   }, []);

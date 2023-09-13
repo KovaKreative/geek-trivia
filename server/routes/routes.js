@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { getQuizCategories, getQuizQuestions } from '../db/queries/quizQueries.js';
+import { getQuizCategories, getQuizQuestions } from '../db/queries/queries.js';
 
 const router = express.Router();
 

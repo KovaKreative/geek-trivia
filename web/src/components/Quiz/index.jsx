@@ -18,7 +18,7 @@ export default function Quiz() {
   const initializeQuestion = function(q) {
     const responses = [q.correct_answer];
     const ordered = [];
-    q.wrong_answers.forEach(a => {
+    q.wrong_answers.split('::').forEach(a => {
       responses.push(a);
     });
 

@@ -36,8 +36,8 @@ export const quizSlice = createSlice({
     nextQuestion: (state) => {
       state.currentRound++;
     },
-    resetQuiz: (state) => {
-      state = { ...initialState };
+    resetQuiz: () => {
+      return { ...initialState };
     }
   }
 });

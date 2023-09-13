@@ -27,10 +27,8 @@ export default function CategoryMenu() {
   const goToQuiz = function() {
     // Filter selected categories and store their IDs for the backend request
     const IDs = Object.values(categories).filter(cat => cat.selected).map(cat => cat.id);
-
-    axios.post(`/quiz/`, {
-      categories: [...IDs], limit: questionLimit
-    })
+    console.log(IDs);
+    axios.get(`/quiz/${IDs.join(",")}`)
       .then(res => {
         if (!res.data.success) {
           return console.log(res.data.err);
@@ -49,17 +47,17 @@ export default function CategoryMenu() {
   useEffect(() => {
     // Get categories from server
     if (!categories.length) {
-      axios.get('/quiz/')
+      axios.get('/quiz/categories')
         .then(res => {
           if (!res.data.success) {
             return console.log(res.data.err);
           }
-          const results = { ...res.data.results };
-          for (const cat in results) {
-            results[cat].questions = results[cat].questions.split(",");
-            results[cat].selected = categories[cat]?.selected || false;
-          }
-          console.log(results);
+          const results = {};
+
+          res.data.results.forEach(r => {
+            const id = r.id;
+            results[id] = { ...r, questions: r.questions.split(","), selected: categories[id]?.selected || false };
+          });
           dispatch(setCategories(results));
           setLoading(false);
         })
@@ -116,9 +114,9 @@ export default function CategoryMenu() {
           </div>
           <div className="h-11 flex justify-center">
             <label className="mr-3 h-fit self-center" htmlFor="total">Total questions: </label>
-            <button className="h-full w-12 bg-yellow-300 hover:bg-yellow-200 active:bg-yellow-400 text-xl rounded-l transition" onClick={e => {e.preventDefault(); setMaxQuestions(prev => Math.max(3, prev - 1))}}>➖</button>
+            <button className="h-full w-12 bg-yellow-300 hover:bg-yellow-200 active:bg-yellow-400 text-xl rounded-l transition" onClick={e => { e.preventDefault(); setMaxQuestions(prev => Math.max(3, prev - 1)); }}>➖</button>
             <input className="no-spinner bg-purple-950 py-0 h-full w-12 text-center text-xl" type="number" name="total" value={questionLimit} min="3" max="20" onChange={e => setMaxQuestions(e.target.value)}></input>
-            <button className="h-full w-12 bg-yellow-300 hover:bg-yellow-200 active:bg-yellow-400 text-xl rounded-r transition" onClick={e => {e.preventDefault(); setMaxQuestions(prev => Math.min(20, prev + 1))}}>➕</button>
+            <button className="h-full w-12 bg-yellow-300 hover:bg-yellow-200 active:bg-yellow-400 text-xl rounded-r transition" onClick={e => { e.preventDefault(); setMaxQuestions(prev => Math.min(20, prev + 1)); }}>➕</button>
           </div>
           <br />
           <Button

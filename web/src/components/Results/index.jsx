@@ -10,7 +10,7 @@ export default function Results() {
   const dispatch = useDispatch();
 
   const questions = useSelector(state => state.quiz.questions);
-  const correct = questions.filter(q => q.correct_answer === q.result).length;
+  const correct = questions.filter(q => q.answer === q.correctAnswer).length;
 
   const resetGame = function() {
     dispatch(resetQuiz());

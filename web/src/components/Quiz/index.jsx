@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { setButtons, nextQuestion } from "../../features/quiz/quizSlice";
 import { goToResults } from "../../features/views/viewSlice";
 
@@ -16,18 +16,8 @@ export default function Quiz() {
   const buttonData = useSelector(state => state.quiz.buttonData);
 
   const initializeQuestion = function(q) {
-    const responses = [q.correct_answer];
-    const ordered = [];
-    q.wrong_answers.split('::').forEach(a => {
-      responses.push(a);
-    });
-
-    while (responses.length) {
-      const index = Math.floor(Math.random() * responses.length);
-      ordered.push(responses.splice(index, 1)[0]);
-    }
     const data = {};
-    ordered.forEach((d, i) => {
+    q.choices.forEach((d, i) => {
       data[i] = {
         id: i,
         text: d,
@@ -52,7 +42,7 @@ export default function Quiz() {
       <div className="mb-4 flex gap-2 flex-wrap justify-center content-center h-1/4">
         {buttons}
       </div>
-      {question.result && <Button
+      {question.answer && <Button
         text={round + 1 < totalQuestions ? "Next" : "See Results"}
         onClick={round + 1 < totalQuestions ? () => dispatch(nextQuestion()) : () => dispatch(goToResults())}
       />}

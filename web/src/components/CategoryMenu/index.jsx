@@ -20,29 +20,54 @@ export default function CategoryMenu() {
 
   const dispatch = useDispatch();
 
-  const quiz = useSelector(state => state.quiz);
-
   const selectCategory = function(cat, val) {
     dispatch(chooseCategory({ ...cat, selected: val }));
   };
 
+  const shuffleArray = function(a) {
+    let array = [...a];
+    let currentIndex = array.length, randomIndex;
+
+    while (currentIndex > 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex--);
+      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
+  };
+
+  const parseResults = function(results) {
+    const formattedQuestions = results.map(r => {
+      const formattedQuestion = {
+        id: r.id,
+        question: r.question,
+        correctAnswer: r.correct_answer,
+        choices: shuffleArray([r.correct_answer, ...r.wrong_answers.split('::')]),
+        answer: null
+      };
+
+      return formattedQuestion;
+    });
+    return formattedQuestions;
+  };
+
   const goToQuiz = function() {
+
     // Filter selected categories and store their IDs for the backend request
     const IDs = Object.values(categories).filter(cat => cat.selected).map(cat => cat.id);
-    axios.get(`/quiz/`, { params: { categories: IDs, limit: questionLimit} })
+    axios.get(`/quiz/`, { params: { categories: IDs, limit: questionLimit } })
       .then(res => {
         if (!res.data.success) {
           return console.log("Serverside Error:", res.data.err);
         }
-        const results = res.data.results;
-        dispatch(setQuiz(results));
+        const quizQuestions = parseResults(res.data.results);
+        dispatch(setQuiz(quizQuestions));
         dispatch(goTo("QUIZ"));
       })
       .catch(err => {
         console.log("Error:", err.message);
       });
     setLoading(true);
-
   };
 
   useEffect(() => {
@@ -69,12 +94,6 @@ export default function CategoryMenu() {
   }, []);
 
   useEffect(() => {
-    const sum = Object.values(categories).reduce((accumulator, cat) => {
-      if (cat.selected) {
-        return accumulator + cat.questions.length;
-      }
-      return accumulator;
-    }, 0);
     let questions = [];
     for (const id in categories) {
       if (!categories[id].selected) {
@@ -88,7 +107,7 @@ export default function CategoryMenu() {
 
   const quizOptions = Object.values(categories).map((cat, i) => {
     return (
-      <div key={i} className="text-yellow-200 md:text-2xl text-left flex">
+      <div key={cat.id} className="text-yellow-200 md:text-2xl text-left flex">
         <input
           name={cat.category}
           type="checkbox"
@@ -116,7 +135,7 @@ export default function CategoryMenu() {
           <div className="h-11 flex justify-center">
             <label className="mr-3 h-fit self-center" htmlFor="total">Total questions: </label>
             <button className="h-full w-12 bg-yellow-300 hover:bg-yellow-200 active:bg-yellow-400 text-xl rounded-l transition" onClick={e => { e.preventDefault(); setMaxQuestions(prev => Math.max(3, prev - 1)); }}>➖</button>
-            <input className="no-spinner bg-purple-950 py-0 h-full w-12 text-center text-xl" type="number" name="total" value={questionLimit} min="3" max="20" onChange={e => setMaxQuestions(Math.min(20, Math.max(e.target.value, 3)))}></input>
+            <input className="no-spinner bg-purple-950 py-0 h-full w-12 text-center text-xl" type="number" name="total" value={questionLimit} min="3" max="20" onBlur={() => setMaxQuestions(prev => Math.min(Math.max(3, prev), 20))} onChange={e => setMaxQuestions(e.target.value, 3)}></input>
             <button className="h-full w-12 bg-yellow-300 hover:bg-yellow-200 active:bg-yellow-400 text-xl rounded-r transition" onClick={e => { e.preventDefault(); setMaxQuestions(prev => Math.min(20, prev + 1)); }}>➕</button>
           </div>
           <br />

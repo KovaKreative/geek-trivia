@@ -18,10 +18,10 @@ export default function Results() {
   };
 
   const renderedResults = questions.map(q => {
-    const correct = q.correct_answer === q.result;
+    const correct = q.answer === q.correctAnswer;
     return <figure key={q.id}>
       <p className="text-yellow-300 text-2xl">{q.question}</p>
-      <p className={correct ? "text-green-300 text-3xl" : "text-red-500 text-3xl"}>You answered: {q.result}</p>
+      <p className={correct ? "text-green-300 text-3xl" : "text-red-500 text-3xl"}>You answered: {q.answer}</p>
     </figure>;
   });
 

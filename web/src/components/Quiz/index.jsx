@@ -42,7 +42,7 @@ export default function Quiz() {
       <div className="mb-4 flex gap-2 flex-wrap justify-center content-center h-1/4">
         {buttons}
       </div>
-      {question.answer && <Button
+      {!!question.answer && <Button
         text={round + 1 < totalQuestions ? "Next" : "See Results"}
         onClick={round + 1 < totalQuestions ? () => dispatch(nextQuestion()) : () => dispatch(goToResults())}
       />}

@@ -9,7 +9,7 @@ export default function QuizButton(props) {
   const buttonData = useSelector(state => state.quiz.buttonData[props.id]);
 
   const quizButtonClass = classnames(
-    "p-2 min-w-fit w-1/3 h-1/4 rounded-xl text-2xl font-bold transition",
+    "p-2 text-wrap w-2/5 h-2/5 rounded-xl text-2xl font-bold transition",
     {
       "bg-yellow-200 hover:bg-yellow-100 text-purple-700 active:bg-yellow-400 hover:text-purple-500 active:text-purple-700 focus:outline-none focus:ring-4 focus:ring-yellow-500": buttonData.state === "active",
       "bg-gray-400 text-gray-600 cursor-not-allowed": buttonData.state === "inactive",

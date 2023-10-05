@@ -9,6 +9,10 @@ import Button from "../Button";
 import Loader from "../Loader";
 
 export default function CategoryMenu() {
+  const questionLimits = {
+    min: 3,
+    max: 20
+  };
 
   const categories = useSelector(state => state.quiz.categories);
 
@@ -16,7 +20,7 @@ export default function CategoryMenu() {
 
   const [loading, setLoading] = useState(true);
 
-  const [questionLimit, setMaxQuestions] = useState(3);
+  const [questionLimit, setMaxQuestions] = useState(10);
 
   const dispatch = useDispatch();
 
@@ -52,7 +56,6 @@ export default function CategoryMenu() {
   };
 
   const goToQuiz = function() {
-
     // Filter selected categories and store their IDs for the backend request
     const IDs = Object.values(categories).filter(cat => cat.selected).map(cat => cat.id);
     axios.get(`/quiz/`, { params: { categories: IDs, limit: questionLimit } })
@@ -133,15 +136,15 @@ export default function CategoryMenu() {
             {quizOptions}
           </div>
           <div className="h-11 flex justify-center">
-            <label className="mr-3 h-fit self-center" htmlFor="total">Total questions: </label>
-            <button className="h-full w-12 bg-yellow-300 hover:bg-yellow-200 active:bg-yellow-400 text-xl rounded-l transition" onClick={e => { e.preventDefault(); setMaxQuestions(prev => Math.max(3, prev - 1)); }}>➖</button>
-            <input className="no-spinner bg-purple-950 py-0 h-full w-12 text-center text-xl" type="number" name="total" value={questionLimit} min="3" max="20" onBlur={() => setMaxQuestions(prev => Math.min(Math.max(3, prev), 20))} onChange={e => setMaxQuestions(e.target.value, 3)}></input>
-            <button className="h-full w-12 bg-yellow-300 hover:bg-yellow-200 active:bg-yellow-400 text-xl rounded-r transition" onClick={e => { e.preventDefault(); setMaxQuestions(prev => Math.min(20, prev + 1)); }}>➕</button>
+            <label className="mr-3 h-fit self-center" htmlFor="total">Total questions (between {questionLimits.min} and {questionLimits.max}): </label>
+            <button className="h-full w-12 bg-yellow-300 hover:bg-yellow-200 active:bg-yellow-400 text-xl rounded-l transition" onClick={e => { e.preventDefault(); setMaxQuestions(prev => Math.max(questionLimits.min, prev - 1)); }}>➖</button>
+            <input className="no-spinner bg-purple-950 py-0 h-full w-12 text-center text-xl" type="number" name="total" value={questionLimit} min="3" max="20" onBlur={() => setMaxQuestions(prev => Math.min(Math.max(questionLimits.min, prev), questionLimits.max))} onChange={e => setMaxQuestions(prev => Math.min(e.target.value, 20))}></input>
+            <button className="h-full w-12 bg-yellow-300 hover:bg-yellow-200 active:bg-yellow-400 text-xl rounded-r transition" onClick={e => { e.preventDefault(); setMaxQuestions(prev => Math.min(questionLimits.max, prev + 1)); }}>➕</button>
           </div>
           <br />
           <Button
-            disabled={questions < questionLimit}
-            text={questions >= questionLimit ? `Start Quiz (${questions} questions)` : `(${questions} questions)`}
+            disabled={questions < questionLimit || questionLimit <= 0}
+            text={questions >= questionLimit ? `Start Quiz` : `(${questions}/${questionLimit} questions)`}
             onClick={goToQuiz}
           />
         </form>

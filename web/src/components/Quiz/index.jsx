@@ -39,7 +39,7 @@ export default function Quiz() {
     <>
       <h1 className="text-5xl text-yellow-300 font-bold mb-5">{`Question ${round + 1} out of ${totalQuestions}`}</h1>
       <p className="text-2xl text-yellow-300 mb-4">{question.question}</p>
-      <div className="mb-4 flex gap-2 flex-wrap justify-center content-center h-1/4">
+      <div className="mb-4 flex gap-2 flex-wrap justify-center content-center w-3/4 h-1/3">
         {buttons}
       </div>
       {!!question.answer && <Button

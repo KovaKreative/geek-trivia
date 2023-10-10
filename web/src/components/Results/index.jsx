@@ -29,7 +29,7 @@ export default function Results() {
     <>
       <h2 className="text-4xl text-yellow-300 font-bold mb-5">{correct} out of {questions.length}</h2>
       <h1 className="text-5xl text-yellow-300 font-bold mb-5">{Math.round(correct/questions.length*100)}% Correct</h1>
-      <div className="bg-indigo-950 p-5 mb-4 flex gap-2 flex-wrap justify-center overflow-y-scroll">
+      <div className="bg-violet-950 p-5 mb-4 flex gap-2 flex-wrap justify-center overflow-y-scroll">
         {renderedResults}
       </div>
       <footer className="w-full mb-4">

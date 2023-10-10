@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'background-pattern': "url('./assets/bgQuestionMarkSeamless.png')"
+      }
+    },
   },
   plugins: [
     require('@tailwindcss/forms')({
